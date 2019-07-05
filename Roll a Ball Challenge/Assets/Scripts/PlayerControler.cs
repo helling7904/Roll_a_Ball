@@ -7,18 +7,28 @@ public class PlayerControler : MonoBehaviour
 {
     public float speed;
     public Text countText;
+    public Text countTotal;
     public Text winText;
+    public Text livesText;
+    public GameObject stageOneWall;
+    public GameObject stageTwo;
+
 
     private Rigidbody rb;
 
     private int count;
+    private int countTot;
+    private int lives;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         count = 0;
         SetCountText ();
+        lives = 1;
+        SetLives ();
         winText.text = "";
+        stageTwo.SetActive (false);
     }
 
      void FixedUpdate()
@@ -36,16 +46,41 @@ public class PlayerControler : MonoBehaviour
         {
             other.gameObject.SetActive (false);
             count = count + 1;
+            countTot = countTot + 1;
             SetCountText ();
+        }
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            other.gameObject.SetActive (false);
+            countTot = countTot - 1;
+            SetCountText ();
+            lives = lives - 1;
+            SetLives ();
+        }
+    }
+    
+    void SetLives ()
+    {
+        livesText.text = "Lives: " + lives.ToString ();
+        if (lives <= 0)
+        {
+            Application.Quit();
         }
     }
     void SetCountText ()
     {
         countText.text = "Count: " + count.ToString ();
-        if (count >= 15)
+        countTotal.text = "Score: " + countTot.ToString ();
+        if (countTot >= 15)
         {
-            winText.text = "You Win!";
+            stageOneWall.SetActive (false);
+            stageTwo.SetActive (true);
         }
+        if (countTot >= 32)
+        {
+            winText.text = "Winner Winner!";
+        }
+        
     }
     void Update ()
     {
@@ -53,3 +88,5 @@ public class PlayerControler : MonoBehaviour
             Application.Quit();
     }
 }
+        
+   

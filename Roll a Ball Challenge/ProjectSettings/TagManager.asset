@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Pick Up
+  - Enemy
+  - Stage Two
+  - Stage One Wall
   layers:
   - Default
   - TransparentFX
