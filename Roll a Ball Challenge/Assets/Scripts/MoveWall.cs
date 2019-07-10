@@ -4,10 +4,22 @@ using UnityEngine;
 
 public class MoveWall : MonoBehaviour
 {
-    public int Speed;
-    // Update is called once per frame
-    void Update()
-    {
-        transform.Rotate (new Vector3(15,0,0) * Time.deltaTime * Speed);
+    public float min=2f;
+    public float max=3f;
+    // Use this for initialization
+    void Start () {
+       
+        min=transform.position.x-3;
+        max=transform.position.x+3;
+   
     }
+   
+    // Update is called once per frame
+    void Update () {
+       
+       
+        transform.position =new Vector3(Mathf.PingPong(Time.time*2,max-min)+min, transform.position.y, transform.position.z);
+       
+    }
+   
 }

@@ -7,7 +7,6 @@ public class PlayerControler : MonoBehaviour
 {
     public float speed;
     public Text countText;
-    public Text countTotal;
     public Text winText;
     public Text livesText;
     public GameObject stageOneWall;
@@ -25,7 +24,7 @@ public class PlayerControler : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         count = 0;
         SetCountText ();
-        lives = 1;
+        lives = 5;
         SetLives ();
         winText.text = "";
         stageTwo.SetActive (false);
@@ -52,7 +51,7 @@ public class PlayerControler : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             other.gameObject.SetActive (false);
-            countTot = countTot - 1;
+            count = count + 1;
             SetCountText ();
             lives = lives - 1;
             SetLives ();
@@ -64,13 +63,14 @@ public class PlayerControler : MonoBehaviour
         livesText.text = "Lives: " + lives.ToString ();
         if (lives <= 0)
         {
-            Application.Quit();
+            winText.text = "You Lose";
+            Destroy(gameObject);
+
         }
     }
     void SetCountText ()
     {
         countText.text = "Count: " + count.ToString ();
-        countTotal.text = "Score: " + countTot.ToString ();
         if (countTot >= 15)
         {
             stageOneWall.SetActive (false);
